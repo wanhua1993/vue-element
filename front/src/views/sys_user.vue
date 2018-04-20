@@ -1,5 +1,8 @@
 <template>
     <div class="wh_sys_user">
+        <div class="wh_sys_add">
+          <el-button type="primary" icon="el-icon-edit">添加保险公司</el-button>
+        </div>
         <wh-table :tableData='tableData' :value='value'></wh-table>
     </div>
 </template>
@@ -10,101 +13,68 @@ export default {
   components: {
     whTable
   },
+  mounted() {
+    this.load_data();
+  },
   methods: {
     handleClick(row) {
       console.log(row);
+    },
+    // 加载 数据
+    load_data() {
+      this.axios
+        .get("/sys_data")
+        .then(res => {
+          // 响应成功回调
+          console.log(res);
+          this.tableData = res.data.result;
+          for(var i = 0; i < this.tableData.length; i++) {
+            this.tableData[i].number = i + 1;
+          }
+        })
+        .catch(e => {
+          // 打印一下错误
+          console.log(e);
+        });
     }
   },
   data() {
     return {
       value: [
         {
-          name: "日期",
-          key: "date"
+          name: "保险公司名称",
+          key: 'company_name'
         },
         {
-          name: "姓名",
-          key: "name"
+          name: "保险公司简介",
+          key: 'company_Introduction'
         },
         {
-          name: "省份",
-          key: "province"
+          name: "业务负责人",
+          key: 'business_owner'
         },
         {
-          name: "城市",
-          key: "city"
+          name: "联系电话",
+          key: 'business_phone'
         },
         {
-          name: "地址",
-          key: "address"
+          name: "对接负责人",
+          key: 'docking_owner'
         },
         {
-          name: "区号",
-          key: "zip"
+          name: "联系电话",
+          key: 'docking_phone'
+        },
+        {
+          name: "系统介入状态",
+          key: 'status'
+        },
+        {
+          name: "备注",
+          key: 'note'
         }
       ],
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          id: "001",
-          number: 1
-        },
-        {
-          date: "2016-05-03",
-          name: "爱吃",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          id: "002",
-          number: 2
-        },
-        {
-          date: "2016-05-03",
-          name: "西红柿",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          id: "003",
-          number: 3
-        },
-        {
-          date: "2016-05-03",
-          name: "番茄",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          id: "004",
-          number: 4
-        },
-        {
-          date: "2016-05-03",
-          name: "土豆",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          id: "005",
-          number: 5
-        },
-        {
-          date: "2016-05-03",
-          name: "佐助",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          id: "006",
-          number: 6
-        },
-      ]
+      tableData: []
     };
   }
 };
@@ -113,5 +83,11 @@ export default {
 .wh_sys_user {
   margin: 20px;
   padding: 10px;
+}
+.wh_sys_add {
+  text-align: left;
+  margin-left: 20px;
+  padding: 10px;
+  border: 1px solid #ddd
 }
 </style>

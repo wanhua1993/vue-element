@@ -5,9 +5,9 @@
             <el-table-column v-for="(item, index) in value" :prop="item.key" :label="item.name" align="center" :key='index'></el-table-column>
             <el-table-column label="操作" align="center" width="150">
                 <template slot-scope="scope">
-                                <el-button @click="handleClick(scope.row)" type="primary" size="small">编辑</el-button>
-                                <el-button type="danger" size="small"  @click='deleteClick(scope.row)'>删除</el-button>
-</template>
+                    <el-button @click="handleClick(scope.row, scope.$index)" type="primary" size="small">编辑</el-button>
+                    <el-button type="danger" size="small"  @click='deleteClick(scope.row)'>删除</el-button>
+                </template>
             </el-table-column>
         </el-table>
         <pagination :tableData='tableData' @currentPage='currentPage'></pagination>
@@ -15,7 +15,7 @@
         <el-dialog title="详情页" :visible.sync="dialogFormVisible" width='500px'>
             <el-form :model="form">
             <el-form-item v-for='(item,index) in value' :label="item.name" :label-width="formLabelWidth" :key='index'>
-                <el-input v-model="formArr[index]" auto-complete="off"></el-input>
+                <el-input v-model="formArr[index + 1]" auto-complete="off"></el-input>
             </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -35,7 +35,7 @@ export default {
   props: ["tableData", "value"],
   data() {
     return {
-      formLabelWidth: "80px",
+      formLabelWidth: "110px",
       dialogFormVisible: false,
       dataList: [],
       loading: true,
@@ -58,8 +58,9 @@ export default {
     }, 2000);
   },
   methods: {
-      // 点击编辑
-    handleClick(row) {
+    // 点击编辑
+    handleClick(row, index) {
+      this.formArr = [];
       this.update_id = row.id;
       for (let val in row) {
         this.form[val] = row[val];
@@ -69,9 +70,9 @@ export default {
     },
     // 点击删除
     deleteClick(row) {
-        this.update_id = row.id;
-        console.log(this.update_id);
-        // 这里写删除的请求
+      this.update_id = row.id;
+      console.log(this.update_id);
+      // 这里写删除的请求
     },
     currentPage(val) {
       this.dataList = this.tableData.slice(10 * (val - 1), 10 * val);
