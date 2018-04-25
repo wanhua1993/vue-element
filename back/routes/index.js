@@ -10,5 +10,13 @@ router.get('/sys_data', (req, res, next) =>{
     });
   })
 });
-
+// 编辑保险对接公司
+router.post('/sys_update_data', (req, res) => {
+  system_docking.sys_update_data(req, res, function (ret) {
+    res.send({
+      status: '200',
+      result: ret
+    });
+  })
+});
 module.exports = router;

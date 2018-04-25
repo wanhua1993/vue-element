@@ -18,6 +18,36 @@ var query = {
                 callback(ret);
             }
         })
+    },
+    // 编辑保险公司数据
+    sys_update_data(req, res, callback) {
+        var val = req.body.params;
+        var id = val[0];
+        var company_name = val[1];
+        var company_Introduction = val[2];
+        var business_owner = val[3];
+        var docking_owner = val[4];
+        var business_phone = val[5];
+        var docking_phone = val[6];
+        var status = val[7];
+        var note = val[8];
+        Model.save({"_id":id},{
+            company_name: company_name,
+            company_Introduction: company_Introduction,
+            business_owner: business_owner,
+            docking_owner: docking_owner,
+            business_phone: business_phone,
+            docking_phone: docking_phone,
+            status: status,
+            note: note
+        },function(ret,err){
+            if (err) {
+                console.log(err);
+            } else {
+                //处理数据 ret
+                callback(ret);
+            }
+        });
     }
 }
 module.exports = query;

@@ -1,7 +1,7 @@
 <template>
     <div id="wrapper">
         <template class="wh_left">
-            <v-header></v-header>
+            <v-top></v-top>
             <v-sidenav></v-sidenav>
         </template>
         <div class="wh_content_box">
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import vHeader from "@/components/include/myheader.vue";
+import vTop from "@/components/include/myTop.vue";
 import vSidenav from "@/components/include/sidenav.vue";
 export default {
   name: "home",
   components: {
-    vHeader,
+    vTop,
     vSidenav
   },
   data() {

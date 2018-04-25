@@ -80,7 +80,7 @@ export default {
     // 修改资料
     confirm_update() {
       this.dialogFormVisible = false;
-      console.log(this.update_id);
+      this.$emit('tableSubmit', this.formArr);
       // 这里写 更新数据 的请求
     }
   }

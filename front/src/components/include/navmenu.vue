@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "header",
+  name: "menu",
   components: {},
   props: ['item', 'navIndex'],
   created: function() {},
