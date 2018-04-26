@@ -19,4 +19,13 @@ router.post('/sys_update_data', (req, res) => {
     });
   })
 });
+// 加载物流人员
+router.get('/logistics_data', (req, res) => {
+  system_docking.logistics_data(req, res, function (ret){
+    res.send({
+      status: '200',
+      result: ret
+    });
+  })
+});
 module.exports = router;

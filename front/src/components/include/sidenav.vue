@@ -1,9 +1,9 @@
 <template>
-<el-container>
+<el-container :style='sidebar.width_0'>
   <el-aside width='100%'>
     <el-row>
       <el-col :span="24">
-        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu default-active="0" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
           <el-submenu v-for='(item, index) in value' :index="String(index)" :key='index' v-if='item.children.length ==0'>
             <template slot="title">
               <i :class="item.icon"></i>
@@ -27,13 +27,19 @@
 
 <script>
 import navMenu from "@/components/include/navmenu.vue";
+import { mapActions, mapState, mapGetters } from "vuex";
 export default {
   name: "header",
   components: {
     navMenu
   },
-  created: function() {},
-  mounted: function() {},
+  created() {},
+  mounted: function() {
+  
+  },
+  computed: {
+    ...mapGetters(["menuitems", "sidebar"])
+  },
   data: function() {
     return {
       value: [
@@ -73,32 +79,32 @@ export default {
           children: [
             {
               pid: "1",
-              path: "/index/create_emit",
+              path: "/index/logistics",
               title: "物流人员备案"
             }
           ]
         },
         {
-          id: '4',
-          icon: 'el-icon-goods',
-          title: '回收单管理',
+          id: "4",
+          icon: "el-icon-goods",
+          title: "回收单管理",
           children: [
             {
-              pid: '1',
-              path: '',
-              title: '订单编号'
+              pid: "1",
+              path: "",
+              title: "订单编号"
             }
           ]
         },
         {
-          id: '5',
-          icon: 'el-icon-menu',
-          title: '仓储管理',
+          id: "5",
+          icon: "el-icon-menu",
+          title: "仓储管理",
           children: [
             {
-              pid: '1',
-              path: '',
-              title: '库管人员备案'
+              pid: "1",
+              path: "",
+              title: "库管人员备案"
             }
           ]
         }
@@ -120,10 +126,10 @@ export default {
 .el-container {
   height: 100%;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: 60px;
   left: 0;
-  width: 15%;
+  z-index: 1000;
 }
 
 .el-header,

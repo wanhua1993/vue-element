@@ -4,7 +4,7 @@
             <v-top></v-top>
             <v-sidenav></v-sidenav>
         </template>
-        <div class="wh_content_box">
+        <div class="wh_content_box" :style='sidebar.width_1'>
             <router-view></router-view>
         </div>
     </div>
@@ -13,6 +13,7 @@
 <script>
 import vTop from "@/components/include/myTop.vue";
 import vSidenav from "@/components/include/sidenav.vue";
+import { mapActions, mapState, mapGetters } from "vuex";
 export default {
   name: "home",
   components: {
@@ -23,6 +24,9 @@ export default {
     return {
       
     };
+  },
+  computed:{
+    ...mapGetters(["menuitems", "sidebar"])
   },
   methods: {
     handleOpen(key, keyPath) {

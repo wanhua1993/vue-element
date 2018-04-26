@@ -6,8 +6,8 @@
       <div class="wh_drop">
         <el-dropdown trigger="click" @command='handleCommand'>
           <span class="el-dropdown-link">
-                         爱吃西红柿<i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
+                                       爱吃西红柿<i class="el-icon-arrow-down el-icon--right"></i>
+                                      </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command='0'>修改密码</el-dropdown-item>
             <el-dropdown-item command='1'>退出登录</el-dropdown-item>
@@ -50,7 +50,7 @@ export default {
         new_password: "",
         confirm_password: ""
       },
-      formLabelWidth: "80px"
+      formLabelWidth: "80px",
     };
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
           type: "warning"
         })
           .then(() => {
-             this.$router.push("/");
+            this.$router.push("/");
           })
           .catch(() => {
             this.$message({
@@ -89,6 +89,8 @@ export default {
 
 <style scoped>
 .el-container {
+  width: 100%;
+
   height: 100%;
   overflow: hidden;
 }
@@ -99,6 +101,9 @@ export default {
   text-align: center;
   line-height: 60px;
   font-size: 26px;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
 }
 .el-aside {
   background-color: #d3dce6;

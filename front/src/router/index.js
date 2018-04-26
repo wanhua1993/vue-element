@@ -6,6 +6,7 @@ import First from '@/views/first'
 import SignUp from '@/views/sign_up'
 import sys_user from '@/views/sys_user'
 import create_emit from '@/views/create_emit'
+import logistics from '@/views/logistics'
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
           path: 'create_emit',
           name: 'create_emit',
           component: create_emit
+        },
+        {
+          path: 'logistics',
+          name: 'logistics',
+          component: logistics
         }
       ]
     }

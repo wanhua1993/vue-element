@@ -1,7 +1,7 @@
 <template>
     <div class="wh_sys_user">
         <div class="wh_sys_add">
-          <el-button type="primary" icon="el-icon-edit" @click='add'>添加保险公司</el-button>
+          <el-button type="primary" icon="el-icon-edit" @click='add'>添加物流人员</el-button>
         </div>
         <wh-table :tableData='tableData' :value='value' @tableSubmit='table_submit' :addCompany='addCompany' @cancel='cancel'></wh-table>
     </div>
@@ -9,6 +9,7 @@
 
 <script>
 import whTable from "@/components/table.vue";
+import {formatDate} from '@/date.js';
 export default {
   components: {
     whTable
@@ -23,12 +24,14 @@ export default {
     // 加载 数据 这里加载
     load_data() {
       this.axios
-        .get("/sys_data")
+        .get("/logistics_data")
         .then(res => {
           // 响应成功回调
           this.tableData = res.data.result;
+          console.log(this.tableData);
           for (var i = 0; i < this.tableData.length; i++) {
             this.tableData[i].number = i + 1;
+            this.tableData[i].updatedAt = formatDate(new Date(Date.parse(this.tableData[i].updatedAt)), "yyyy-MM-ddhh:mm:ss");
           }
         })
         .catch(e => {
@@ -74,32 +77,28 @@ export default {
       addCompany: false,
       value: [
         {
-          name: "保险公司名称",
-          key: "company_name"
+          name: "姓名",
+          key: "name"
         },
         {
-          name: "保险公司简介",
-          key: "company_Introduction"
+          name: "所属物流公司",
+          key: "company"
         },
         {
-          name: "业务负责人",
-          key: "business_owner"
+          name: "工号",
+          key: "work_number"
         },
         {
-          name: "联系电话",
-          key: "business_phone"
+          name: "联系方式",
+          key: "phone_number"
         },
         {
-          name: "对接负责人",
-          key: "docking_owner"
+          name: "分管负责人",
+          key: "responsible_person"
         },
         {
-          name: "联系电话",
-          key: "docking_phone"
-        },
-        {
-          name: "系统介入状态",
-          key: "status"
+          name: "最近登录时间",
+          key: "updatedAt"
         },
         {
           name: "备注",

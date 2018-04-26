@@ -1,6 +1,6 @@
 const client = require('../config/client');
 const Model = client.Factory("system_docking");
-
+const Model1 = client.Factory('personnel_management');
 // 连接 apiCloud 数据库 
 var query = {
     // 请求 数据
@@ -48,6 +48,25 @@ var query = {
                 callback(ret);
             }
         });
+    },
+    // 请求人员数据
+    logistics_data(req, res, callback) {
+        Model1.query({
+            filter: {
+                "order": "id DESC",
+                "limit": 1000,
+                "where": {
+                    "type": '1'
+                }
+            }
+        }, function (ret, err) {
+            if (err) {
+                console.log(err);
+            } else {
+                //处理数据 ret
+                callback(ret);
+            }
+        })
     }
 }
 module.exports = query;

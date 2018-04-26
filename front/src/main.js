@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from './http'
+import store from './store/'
 
 Vue.prototype.axios = axios
 
@@ -17,6 +18,7 @@ new Vue({
   el: '#app',
   router,
   axios,
+  store,
   components: { App },
   template: '<App/>'
 });
