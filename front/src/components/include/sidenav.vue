@@ -4,17 +4,17 @@
     <el-row>
       <el-col :span="24">
         <el-menu default-active="0" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-          <el-submenu v-for='(item, index) in value' :index="String(index)" :key='index' v-if='item.children.length ==0'>
+          <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.children.length ==0'>
             <template slot="title">
               <i :class="item.icon"></i>
-              <router-link :to='item.path'><span>{{item.title}}</span></router-link>
+              <router-link :to='item.path'><span>{{item.name}}</span></router-link>
             </template>
           </el-submenu>
-          <el-submenu v-for='(item, index) in value' :index="String(index)" :key='index' v-if='item.children.length !=0'>
+          <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.children.length !=0'>
             <template slot="title">
               <i :class="item.icon"></i>
                 <router-link to='item.path'></router-link>
-              <span>{{item.title}}</span>
+              <span>{{item.name}}</span>
             </template>
             <nav-menu :item='item'></nav-menu>
           </el-submenu>
@@ -31,84 +31,22 @@ import { mapActions, mapState, mapGetters } from "vuex";
 export default {
   name: "header",
   components: {
-    navMenu
+    navMenu,
+    menu: []
   },
-  created() {},
+  created() {
+    this.menu = this.menuList;
+
+  },
   mounted: function() {
-  
+
   },
   computed: {
-    ...mapGetters(["menuitems", "sidebar"])
+    ...mapGetters(["menuitems", "sidebar", "menuList"])
   },
   data: function() {
     return {
-      value: [
-        {
-          id: "1",
-          icon: "el-icon-tickets",
-          title: "管理菜单",
-          path: "/index/first",
-          children: []
-        },
-        {
-          id: "2",
-          icon: "el-icon-news",
-          title: "保险公司管理",
-          children: [
-            {
-              pid: "1",
-              path: "/index/sys_user",
-              title: "系统对接管理"
-            },
-            {
-              pid: "2",
-              path: "/index/first",
-              title: "定损员管理"
-            },
-            {
-              pid: "3",
-              path: "/index/signUp",
-              title: "用户注册"
-            }
-          ]
-        },
-        {
-          id: "3",
-          icon: "el-icon-date",
-          title: "物流管理",
-          children: [
-            {
-              pid: "1",
-              path: "/index/logistics",
-              title: "物流人员备案"
-            }
-          ]
-        },
-        {
-          id: "4",
-          icon: "el-icon-goods",
-          title: "回收单管理",
-          children: [
-            {
-              pid: "1",
-              path: "",
-              title: "订单编号"
-            }
-          ]
-        },
-        {
-          id: "5",
-          icon: "el-icon-menu",
-          title: "仓储管理",
-          children: [
-            {
-              pid: "1",
-              path: "",
-              title: "库管人员备案"
-            }
-          ]
-        }
-      ]
+      
     };
   },
   methods: {

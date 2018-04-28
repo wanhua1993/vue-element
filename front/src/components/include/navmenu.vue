@@ -3,7 +3,7 @@
     <el-menu-item v-for='(val, index) in item.children' :index="String(index)" :key='index' >
         <router-link :to='val.path'>
           <i class="el-icon-more"></i>
-          {{val.title}}
+          {{val.name}}
           </router-link>
     </el-menu-item>
 </el-menu-item-group>

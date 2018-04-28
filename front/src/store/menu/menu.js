@@ -1,6 +1,8 @@
 const types = {
     // 这里是定义组件的方法 名
-    MENU_EXTENSION: 'MENU_EXTENSION', //添加菜单
+    MENU_EXTENSION: 'MENU_EXTENSION',
+    ADD_MENU: 'ADD_MENU', //添加菜单
+    LOAD_ROUTERS: 'LOAD_ROUTERS'
 }
 
 
@@ -16,12 +18,16 @@ const state = {
             "width": '85%'
         }
     },
+    isLoadRoutes: false,
+    items: []
 }
 
 const getters = {
     // 这里一般写一些过滤 state 的方法
     menuitems: state => state.is_menu_extension,
-    sidebar: state => state.sidebar
+    sidebar: state => state.sidebar,
+    isLoadRoutes: state => state.isLoadRoutes,
+    menuList: state => state.items
 }
 
 const mutations = {
@@ -44,6 +50,16 @@ const mutations = {
         }
         state.sidebar.opened = !state.sidebar.opened;
     },
+    [types.ADD_MENU](state, menuItems) {
+        if (menuItems.length === 0) {
+            state.items = []
+        } else {
+            state.items = menuItems
+        }
+    },
+    [types.LOAD_ROUTERS](state) {
+        state.isLoadRoutes = !state.isLoadRoutes;
+    }
 }
 
 const actions = {
@@ -53,6 +69,9 @@ const actions = {
             commit(types.ADD_MENU, menuItems)
         }
     },
+    loadRoutes: ({commit} ) => {
+        commit(types.LOAD_ROUTERS);
+    }
 }
 
 export default {

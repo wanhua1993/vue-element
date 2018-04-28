@@ -25,21 +25,23 @@ export default {
       
     };
   },
+  created() {
+
+  },
   computed:{
     ...mapGetters(["menuitems", "sidebar"])
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+   
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+   
     }
   },
   watch: {
     $route(to, from) {
-      console.log(to);
-      console.log(from);
+      
     }
   }
 };
