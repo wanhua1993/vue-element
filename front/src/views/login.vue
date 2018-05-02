@@ -123,10 +123,10 @@ export default {
           id: 1,
           path: "/index",
           name: "首页",
-          component: "home",
+          component: "first",
           icon: "fa-server",
           noDropdown: true,
-          children: [{ path: "/index", name: "首页", component: "home" }]
+          children: [{ path: "/index", name: "首页", component: "first" }]
         },
         {
           id: 2,
@@ -144,9 +144,9 @@ export default {
             },
             {
               pid: "2",
-              path: "/first",
+              path: "/create_emit",
               name: "定损员管理",
-              component: "first"
+              component: "create_emit"
             },
             {
               pid: "3",
@@ -155,7 +155,24 @@ export default {
               component: "sign_up"
             }
           ]
+        },
+        {
+          id: 3,
+          path: "/logis",
+          name: "物流管理",
+          component: "content",
+          icon: "fa-user",
+          noDropdown: true,
+          children: [
+            {
+              pid: "1",
+              path: "/logistics",
+              name: "物流人员备案",
+              component: "logistics"
+            }
+          ]
         }
+        
       ];
       mUtils.setStore("menuList", menuList); // 將菜單信息放到緩存中
       this.addMenu(menuList); // 生成菜单,将菜单放入store 。以後在渲染菜單的時候從store中拿即可

@@ -3,7 +3,7 @@
   <el-aside width='100%'>
     <el-row>
       <el-col :span="24">
-        <el-menu default-active="0" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu default-active="-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
           <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.children.length ==0'>
             <template slot="title">
               <i :class="item.icon"></i>
@@ -51,10 +51,10 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      
     }
   }
 };
