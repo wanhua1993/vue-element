@@ -1,19 +1,19 @@
 <template>
-<el-container :style='sidebar.width_0'>
-  <el-aside width='100%'>
-    <el-row>
-      <el-col :span="24">
-        <el-menu default-active="-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-          <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.children.length ==0'>
-            <template slot="title">
-              <i :class="item.icon"></i>
-              <router-link :to='item.path'><span>{{item.name}}</span></router-link>
-            </template>
+  <el-container :style='sidebar.width_0'>
+    <el-aside width='100%'>
+      <el-row>
+        <el-col :span="24">
+          <el-menu default-active="-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+            <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.noDropdown == true'>
+              <template slot="title">
+                <i :class="item.icon"></i>
+                <router-link :to='item.path'><span>{{item.name}}</span></router-link>
+                </template>
           </el-submenu>
-          <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.children.length !=0'>
+          <el-submenu v-for='(item, index) in menu' :index="String(index)" :key='index' v-if='item.noDropdown == false'>
             <template slot="title">
               <i :class="item.icon"></i>
-                <router-link to='item.path'></router-link>
+              <router-link to='item.path'></router-link>
               <span>{{item.name}}</span>
             </template>
             <nav-menu :item='item'></nav-menu>
@@ -26,70 +26,68 @@
 </template>
 
 <script>
-import navMenu from "@/components/include/navmenu.vue";
-import { mapActions, mapState, mapGetters } from "vuex";
-export default {
-  name: "header",
-  components: {
-    navMenu,
-    menu: []
-  },
-  created() {
-    this.menu = this.menuList;
-
-  },
-  mounted: function() {
-
-  },
-  computed: {
-    ...mapGetters(["menuitems", "sidebar", "menuList"])
-  },
-  data: function() {
-    return {
-      
-    };
-  },
-  methods: {
-    handleOpen(key, keyPath) {
-      
+  import navMenu from "@/components/include/navmenu.vue";
+  import {
+    mapActions,
+    mapState,
+    mapGetters
+  } from "vuex";
+  export default {
+    name: "header",
+    components: {
+      navMenu,
+      menu: []
     },
-    handleClose(key, keyPath) {
-      
+    created() {
+      this.menu = this.menuList;
+      console.log(this.menu);
+    },
+    mounted: function() {},
+    computed: {
+      ...mapGetters(["menuitems", "sidebar", "menuList"])
+    },
+    data: function() {
+      return {
+        isCollapse: true
+      };
+    },
+    methods: {
+      handleOpen(key, keyPath) {},
+      handleClose(key, keyPath) {}
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.el-container {
-  height: 100%;
-  overflow: hidden;
-  position: fixed;
-  top: 60px;
-  left: 0;
-  z-index: 1000;
-}
-
-.el-header,
-.el-footer {
-  background-color: #b3c0d1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-  font-size: 26px;
-}
-
-.el-aside {
-  background-color: #d3dce6;
-  color: #333;
-  text-align: center;
-  height: 100%;
-}
-
-.hamburger-container {
-  line-height: 58px;
-  height: 30px;
-  float: left;
-  padding: 0 10px;
-}
+  .el-container {
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1000;
+  }
+  .el-header,
+  .el-footer {
+    background-color: #b3c0d1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+    font-size: 26px;
+  }
+  .el-aside {
+    background-color: #b5cdf0;
+    color: #333;
+    text-align: center;
+    height: 100%;
+  }
+  .hamburger-container {
+    line-height: 58px;
+    height: 30px;
+    float: left;
+    padding: 0 10px;
+  }
+  .el-submenu {
+    text-align: left;
+  }
 </style>

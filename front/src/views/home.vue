@@ -5,12 +5,14 @@
             <v-sidenav></v-sidenav>
         </template>
         <div class="wh_content_box" :style='sidebar.width_1'>
+            <bread :vWidth='sidebar.width_1'></bread> 
             <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script>
+import bread from '@/components/include/bread.vue';
 import vTop from "@/components/include/myTop.vue";
 import vSidenav from "@/components/include/sidenav.vue";
 import { mapActions, mapState, mapGetters } from "vuex";
@@ -18,7 +20,8 @@ export default {
   name: "home",
   components: {
     vTop,
-    vSidenav
+    vSidenav,
+    bread
   },
   data() {
     return {
@@ -81,7 +84,7 @@ export default {
 }
 .wh_content_box {
   position: absolute;
-  top: 60px;
+  top: 84px;
   right: 0;
   width: 85%;
   height: 100%;

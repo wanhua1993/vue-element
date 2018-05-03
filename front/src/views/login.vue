@@ -124,17 +124,17 @@ export default {
           path: "/index",
           name: "首页",
           component: "first",
-          icon: "fa-server",
+          icon: "el-icon-tickets",
           noDropdown: true,
           children: [{ path: "/index", name: "首页", component: "first" }]
         },
         {
           id: 2,
           path: "/system",
-          name: "保險公司管理",
+          name: "保险公司管理",
           component: "content",
-          icon: "fa-user",
-          noDropdown: true,
+          icon: "el-icon-menu",
+          noDropdown: false,
           children: [
             {
               pid: "1",
@@ -161,8 +161,8 @@ export default {
           path: "/logis",
           name: "物流管理",
           component: "content",
-          icon: "fa-user",
-          noDropdown: true,
+          icon: "el-icon-goods",
+          noDropdown: false,
           children: [
             {
               pid: "1",

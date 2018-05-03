@@ -96,7 +96,7 @@ export default {
 }
 .el-header,
 .el-footer {
-  background-color: #b3c0d1;
+  background-color: #b5cdf0;
   color: #333;
   text-align: center;
   line-height: 60px;
