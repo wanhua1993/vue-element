@@ -101,20 +101,6 @@ export default {
           return false;
         }
       });
-      // console.log(loginForm);
-      // if (!loginForm.username && !loginForm.password) {
-      //   this.$alert("用户名密码输入有误！", "提示", {
-      //     confirmButtonText: "确定",
-      //     callback: action => {
-      //       this.$message({
-      //         type: "info",
-      //         message: `请输入正确的用户名密码！`
-      //       });
-      //     }
-      //   });
-      // } else {
-      //   this.$router.push("/index");
-      // }
     },
     //模拟动态生成菜单并定位到index
     generateMenuPushIndex() {
@@ -139,7 +125,7 @@ export default {
             {
               pid: "1",
               path: "/sys_user",
-              name: "系统对接管理",
+              name: "系统对接机构",
               component: "sys_user"
             },
             {
@@ -199,13 +185,26 @@ export default {
         this.$router.addRoutes(asyncRouterMap);
         this.loadRoutes(); // true,第二次进来不用再去加载路由
       }
-      this.$router.push("/index");
+      // 登录 发送请求 获取 token 值
+      this.axios
+        .post("/login_in", {
+          params: this.loginForm
+        })
+        .then(res => {
+            var token = res.data.token;
+            localStorage.token = token;
+            this.$router.push("/index");
+        })
+        .catch(e => {
+          // 打印一下错误
+          console.log(e);
+        });
+      
     }
   },
   watch: {
     $route(to, from) {
-      console.log(to);
-      console.log(from);
+
     }
   }
 };

@@ -29,9 +29,19 @@ if (menuData) {
   ]
   router.addRoutes(asyncRouterMap);
 }
+var a = 0;
 router.beforeEach((route, redirect, next) => {
   //定位到首页时，清空缓存数据;
+  // console.log(route);
+  // if(route.path=='/' || route.path == '/sign_up'){//如果是登录页面路径，就直接next()
+  //   next();
+  // }else{//不然就跳转到登录；
+  //   next('/sign_up');
+  // }
   next();
+
+
+
   // if (route.path === '/') {
   //   localStorage.removeItem('userinfo')
   //   localStorage.removeItem('menuData')

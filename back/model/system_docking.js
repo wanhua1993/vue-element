@@ -67,6 +67,24 @@ var query = {
                 callback(ret);
             }
         })
+    },
+    // 登录
+    login_in(req, res, callback) {
+        var user = req.body.params;
+        Model1.query({
+            filter: {
+                "where": {
+                    "work_number": user.username,
+                }
+            }
+        }, function (ret, err) {
+            if (err) {
+                console.log(err);
+            } else {
+                //处理数据 ret
+                callback(ret);
+            }
+        })
     }
 }
 module.exports = query;
