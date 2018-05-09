@@ -3,9 +3,12 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');//用来创建和确认用户信息摘要 
 const system_docking = require('../model/system_docking');
 const token_ware = require('../middleware/token_ware');
-
+const ocr = require('../model/ocr');
+const formidable = require('formidable');
+const fs = require('fs');
 /* GET home page. */
 router.get('/sys_data', (req, res, next) => {
+  ocr();
   system_docking.get_system_docking_data(function (ret) {
     res.send({
       status: '200',
@@ -62,6 +65,30 @@ router.post('/login_in', (req, res) => {
         result: '该用户不存在 请返回注册'
       });
     }
+  });
+});
+// 上传图片
+router.post('/post_photo', (req, res) => {
+  // 跨域
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+
+  let form = new formidable.IncomingForm();
+  form.encoding = 'utf-8'; // 编码
+  form.keepExtensions = true; // 保留扩展名
+  form.maxFieldsSize = 2 * 1024 * 1024; // 文件大小
+  form.uploadDir = './public/images/'  // 存储路径
+  form.parse(req, function (err, fileds, files) { // 解析 formData数据
+    var image_path = './public/images/' + files.file.path.split('\\')[2];
+    if (err) { return console.log(err) }
+    var data = fs.readFileSync(image_path);
+    ocr(data, function (ret) {
+      res.send({
+        status: '200',
+        result: ret
+      });
+    });
   });
 });
 module.exports = router;

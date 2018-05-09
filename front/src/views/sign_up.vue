@@ -15,7 +15,13 @@
             </el-form-item>
             <!-- 上传图片 -->
             <el-form-item label="头像" prop="pic">
-                <upload-pic></upload-pic>
+                <!-- <upload-pic></upload-pic> -->
+                <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-change="upload_photo" :auto-upload='false'>
+                    <i class="el-icon-plus"></i>
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
+                </el-upload>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
@@ -26,7 +32,7 @@
 </template>
 
 <script>
-import uploadPic from '@/components/upload_pic.vue'
+    import uploadPic from "@/components/upload_pic.vue";
     export default {
         components: {
             uploadPic
@@ -34,14 +40,14 @@ import uploadPic from '@/components/upload_pic.vue'
         data() {
             var checkAge = (rule, value, callback) => {
                 if (!value) {
-                    return callback(new Error('年龄不能为空'));
+                    return callback(new Error("年龄不能为空"));
                 }
                 setTimeout(() => {
                     if (!Number.isInteger(value)) {
-                        callback(new Error('请输入数字值'));
+                        callback(new Error("请输入数字值"));
                     } else {
                         if (value < 18) {
-                            callback(new Error('必须年满18岁'));
+                            callback(new Error("必须年满18岁"));
                         } else {
                             callback();
                         }
@@ -49,76 +55,99 @@ import uploadPic from '@/components/upload_pic.vue'
                 }, 1000);
             };
             var validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入密码'));
+                if (value === "") {
+                    callback(new Error("请输入密码"));
                 } else {
-                    if (this.ruleForm2.checkPass !== '') {
-                        this.$refs.ruleForm2.validateField('checkPass');
+                    if (this.ruleForm2.checkPass !== "") {
+                        this.$refs.ruleForm2.validateField("checkPass");
                     }
                     callback();
                 }
             };
             var validateUsername = (rule, value, callback) => {
                 console.log(rule);
-                if (value === '') {
-                    callback(new Error('请输入用户名'));
+                if (value === "") {
+                    callback(new Error("请输入用户名"));
                 } else {
                     callback();
                 }
             };
             var validatePass2 = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请再次输入密码'));
+                if (value === "") {
+                    callback(new Error("请再次输入密码"));
                 } else if (value !== this.ruleForm2.pass) {
-                    callback(new Error('两次输入密码不一致!'));
+                    callback(new Error("两次输入密码不一致!"));
                 } else {
                     callback();
                 }
             };
             return {
                 ruleForm2: {
-                    username: '',
-                    pass: '',
-                    checkPass: '',
-                    age: ''
+                    username: "",
+                    pass: "",
+                    checkPass: "",
+                    age: ""
                 },
                 rules2: {
                     username: [{
                         validator: validateUsername,
-                        trigger: 'blur'
+                        trigger: "blur"
                     }],
                     pass: [{
                         validator: validatePass,
-                        trigger: 'blur'
+                        trigger: "blur"
                     }],
                     checkPass: [{
                         validator: validatePass2,
-                        trigger: 'blur'
+                        trigger: "blur"
                     }],
                     age: [{
                         validator: checkAge,
-                        trigger: 'blur'
+                        trigger: "blur"
                     }]
-                }
+                },
+                dialogImageUrl: "",
+                dialogVisible: false,
+                params: {}
             };
         },
         methods: {
             submitForm(formName) {
-                console.log(this.$refs.ruleForm2);
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
+                let config = {
+                    header: {
+                        "Content-Type": "application/x-www-form-urlencode"
                     }
+                };
+                this.axios.post("/post_photo", this.params, config).then(res => {
+                    console.log(res);
                 });
+                // console.log(this.$refs.ruleForm2);
+                // this.$refs[formName].validate(valid => {
+                //     if (valid) {
+                //         alert("submit!");
+                //     } else {
+                //         console.log("error submit!!");
+                //         return false;
+                //     }
+                // });
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            },
+            upload_photo(file, fileList) {
+                console.log(file.raw);
+                this.params = new FormData();
+                this.params.append("file", file.raw);
             }
         }
-    }
+    };
 </script>
 <style scoped>
     .wh_sign_up {
